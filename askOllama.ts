@@ -6,12 +6,12 @@ import { mkdir, readFile, writeFile } from 'fs/promises';
 async function askOllama(requirementPath: string, outputFilePath: string) {
     const content = await readFile(requirementPath, 'utf-8');
     
-    const prompt = `You are a software test engineer. Based on this requirement document ${requirementPath}, generate functional test cases using cypress and TypeScript. Ensure the test file is correctly formatted, including all opening and closing braces, parentheses, and necessary syntax. Generate the file content without any additional commentary or text orbackticks or the word "typescript". Example:
+    const prompt = `You are a software test engineer. Based on this requirement document ${requirementPath}, generate functional test cases using cypress and TypeScript. Ensure the test file is correctly formatted, including all opening and closing braces, parentheses, and necessary syntax. Generate the file content without any additional commentary or text orbackticks or the word "typescript" or backtick . Example:
     
     describe('Login Tests', () => {
         beforeEach(() => {
           cy.clearLocalStorage()
-          cy.visit('/')
+          cy.visit('/registration.html')
     });
       it('should log in with valid credentials', () => {
         // test implementation

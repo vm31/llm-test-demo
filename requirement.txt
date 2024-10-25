@@ -12,17 +12,3 @@ User Registration and Authentication
 1. Users should be able to register with email and password.
 2. Users should receive a confirmation email upon registration.
 3. Users should be able to log in and log out securely.
-Non-Functional Requirements
-1. The website should load within 3 seconds on a standard internet connection.
-2. The website should be compatible with major web browsers (Chrome, Firefox, Safari).
-3. The website should comply with accessibility standards (WCAG 2.1).
-4. Data privacy and security measures should be implemented to protect user information.
-Timeline
-Phase 1: Requirement Gathering - 2 weeks
-Phase 2: Design - 4 weeks
-Phase 3: Development - 8 weeks
-Phase 4: Testing - 4 weeks
-Phase 5: Deployment - 2 weeks
-
-Conclusion
-This requirements document serves as a guideline for the development of the e-commerce website. All stakeholders are encouraged to review and provide feedback to ensure all needs are met effectively.

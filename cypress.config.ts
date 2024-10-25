@@ -17,7 +17,7 @@ export default defineConfig({
       require('cypress-mochawesome-reporter/plugin')(on);
       return config;
     },
-    baseUrl: "http://localhost:8080",
+    baseUrl: "http://127.0.0.1:8080",
     fixturesFolder: 'cypress/fixtures',
     supportFile: 'cypress/support/index.ts',
     specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',

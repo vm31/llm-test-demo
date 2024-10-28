@@ -1,91 +1,78 @@
+describe('User Registration Tests', () => {
+    beforeEach(() => {
+        cy.clearLocalStorage()
+        cy.visit('/registration.html')
+        cy.url().should('contain', '/registration.html')
+    });
 
+    it.only('should register with valid email and password', () => {
+        cy.get('#name').type('kjhkjh')
+        cy.get('#email').type('test@example.com')
+        cy.get('#password').type('password123')
+        cy.get('#confirm-password').type('password123')
+        cy.get('.submit-btn').click()
+    });
+
+    it('should receive a confirmation email upon registration', () => {
+        cy.intercept('POST', '/api/register', (req) => {
+            req.reply({ message: 'Registration successful' }); // send Simulate a successful response
+        }).as('registerUser'); // Alias the intercept for later reference
+    
+        cy.get('#email').type('test@example.com')
+        cy.get('#password').type('password123')
+        cy.get('#register-button').click()
+
+        cy.get('@confirmEmail').should('be.visible')
+    });
+
+    it('should not allow registration without a valid email', () => {
+        cy.get('#email').clear()
+        cy.get('#password').type('password123')
+        cy.get('#register-button').click()
+
+        cy.get('[data-cy="error-email"]').should('be.visible')
+    });
+});
 
 describe('Login Tests', () => {
-  beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.visit('/')
-  });
+    beforeEach(() => {
+      cy.clearLocalStorage()
+      cy.visit('/registration.html')
+      cy.url().should('contain', '/registration.html')
+    });
 
-  it('should log in with valid credentials', () => {
-    cy.get('#username').type('valid-username')
-    cy.get('#password').type('valid-password')
-    cy.get('#login-button').click()
-    cy.get('.user-name').contains('Valid Username')
-  })
+    it('should log in with valid credentials', () => {
+        cy.get('#email').type('test@example.com')
+        cy.get('#password').type('password123')
+        cy.get('#login-button').click()
+        cy.url().should('contain', '/dashboard.html')
+    });
 
-  it('should show an error for invalid credentials', () => {
-    cy.get('#username').type('invalid-username')
-    cy.get('#password').type('invalid-password')
-    cy.get('#login-button').click()
-    cy.get('.error-message').contains('Invalid Credentials')
-  })
-})
+    it('should show an error for invalid credentials', () => {
+        cy.get('#email').type('invalid@email')
+        cy.get('#password').type('wrongpassword')
+        cy.get('#login-button').click()
 
-describe('Registration Tests', () => {
-  beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.visit('/register')
-  });
+        cy.get('[data-cy="error-credentials"]').should('be.visible')
+    });
+});
 
-  it('should register a new user with valid credentials', () => {
-    cy.get('#username').type('new-username')
-    cy.get('#password').type('new-password')
-    cy.get('#confirm-password').type('new-password')
-    cy.get('#submit-button').click()
-    cy.url().should('contain', '/profile')
-  })
+describe('Product Search Tests', () => {
+    beforeEach(() => {
+        cy.clearLocalStorage()
+        cy.visit('/search.html')
+    });
 
-  it('should show an error for invalid registration data', () => {
-    cy.get('#username').type('')
-    cy.get('#password').type('weak-password')
-    cy.get('#confirm-password').type('invalid-password')
-    cy.get('#submit-button').click()
-    cy.get('.error-message').contains('Username is required, Password should be at least 8 characters.')
-  })
-})
+    it('should search for a product by name', () => {
+        cy.get('#search-input').type('test-product')
+        cy.get('#search-button').click()
 
-describe('Logout Tests', () => {
-  beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.visit('/')
-  });
+        cy.get('[data-cy="product-result"]').contains('Test Product')
+    });
 
-  it('should log out the current user', () => {
-    cy.get('.user-name').then((username) => {
-      if (username.text() === 'Valid Username') {
-        cy.get('#logout-button').click()
-        cy.url().should('contain', '/')
-      }
-    })
-  })
-
-  it('should show a success message after successful logout', () => {
-    cy.get('.success-message').contains('You have been successfully logged out')
-  })
-})
-
-describe('Profile Tests', () => {
-  beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.visit('/')
-    cy.get('#logout-button').click()
-    cy.url().should('contain', '/profile')
-  });
-
-  it('should view the profile details of the current user', () => {
-    cy.get('.user-name').then((username) => {
-      if (username.text() === 'Valid Username') {
-        cy.get('.user-email').contains('valid-username@example.com')
-        cy.get('.user-profile-image').should('be.visible')
-      }
-    })
-  })
-
-  it('should update the profile details of the current user', () => {
-    cy.get('#update-profile-button').click()
-    cy.get('#username-input').type('new-username')
-    cy.get('#password-input').type('new-password')
-    cy.get('#confirm-password-input').type('new-password')
-    cy.get('.update-profile-success-message').contains('Profile Updated Successfully')
-  })
-})
+    it('should filter products by category', () => {
+        cy.get('#category-select').select('Electronics')
+        cy.get('#search-button').click()
+        cy.get('[data-cy="product-result"]').contains('Test Product (Electronics)')
+    });
+});

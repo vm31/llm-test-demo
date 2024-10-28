@@ -2,29 +2,35 @@ import { dirname } from 'path';
 import ollama from 'ollama';
 import { mkdir, readFile, writeFile } from 'fs/promises';
 
-
 async function askOllama(requirementPath: string, outputFilePath: string) {
-    const content = await readFile(requirementPath, 'utf-8');
-    
-    const prompt = `You are a software test engineer. Based on this requirement document ${requirementPath}, generate functional test cases using cypress and TypeScript. Ensure the test file is correctly formatted, including all opening and closing braces, parentheses, and necessary syntax. Generate the file content without any additional commentary or text orbackticks or the word "typescript" or backtick . Example:
-    
-    describe('Login Tests', () => {
-        beforeEach(() => {
-          cy.clearLocalStorage()
-          cy.visit('/registration.html')
-    });
-      it('should log in with valid credentials', () => {
-        // test implementation
-      });
-      
-      it('should show an error for invalid credentials', () => {
-        // test implementation
-      });
-    });
-    `;
-
     try {
+        // Read the requirement doc
+        const content = await readFile(requirementPath, 'utf-8');
+        
+        const prompt = `You are a software test engineer. Generate functional test cases using Cypress in typescript based on the following requirement document: ${content}. Ensure the test file is formatted correctly, with all necessary braces, parentheses, and syntax. Generate only the file content without any commentary or extra text. Do not include the word "TypeScript" in the output. 
+    
+        Example:
+        
+        describe('Login Tests', () => {
+            beforeEach(() => {
+                cy.clearLocalStorage();
+                cy.visit('/registration.html');
+            });
+            
+            it('should log in with valid credentials', () => {
+                // test implementation
+            });
+            
+            it('should show an error for invalid credentials', () => {
+                // test implementation
+            });
+        });
+        `;
+        
+
+        // Send the prompt to Ollama
         const response = await ollama.chat({ model: 'llama3.2', messages: [{ role: 'user', content: prompt }], stream: true });
+        console.log('prompt is:',prompt)
 
         let generatedContent = '';
 
@@ -33,7 +39,7 @@ async function askOllama(requirementPath: string, outputFilePath: string) {
             generatedContent += part.message.content;
         }
 
-        // Ensure the directory exists, create it if not
+        // Ensure the directory exists
         const dir = dirname(outputFilePath);
         await mkdir(dir, { recursive: true });
 
@@ -42,9 +48,9 @@ async function askOllama(requirementPath: string, outputFilePath: string) {
 
         console.log(`Cypress test cases generated and saved to ${outputFilePath}`);
     } catch (error) {
-        console.error(error);
+        console.error('Error generating test cases:', error);
     }
 }
 
 // Call the function
-askOllama('requirement.txt', 'cypress/e2e/tests/login.spec.cy.ts');
+askOllama('requirement.txt', 'cypress/e2e/tests/registration.spec.cy.ts');

@@ -1,78 +1,128 @@
 describe('User Registration Tests', () => {
     beforeEach(() => {
-        cy.clearLocalStorage()
-        cy.visit('/registration.html')
-        cy.url().should('contain', '/registration.html')
+        cy.clearLocalStorage();
+        cy.visit('/registration.html');
     });
 
-    it.only('should register with valid email and password', () => {
-        cy.get('#name').type('kjhkjh')
-        cy.get('#email').type('test@example.com')
-        cy.get('#password').type('password123')
-        cy.get('#confirm-password').type('password123')
-        cy.get('.submit-btn').click()
+    it('should register with valid email and password', () => {
+        cy.get('#email').type('test@example.com');
+        cy.get('#password').type('TestPassword123!');
+        cy.get('.submit-button').click();
+        cy.url().should('include', '/ confirmation');
     });
 
     it('should receive a confirmation email upon registration', () => {
+        // Mock email service to send a confirmation email
         cy.intercept('POST', '/api/register', (req) => {
-            req.reply({ message: 'Registration successful' }); // send Simulate a successful response
+            req.reply({ message: 'Registration successful' });
+        }).as('registerUser'); 
+    
+
+        cy.get('#email').type('test@example.com');
+        cy.get('#password').type('TestPassword123!');
+        cy.get('.submit-button').click();
+        cy.get('@confirmationEmail').should('contain', 'Confirmation Email Sent');
+    });
+
+    it('should allow users to log in with valid credentials', () => {
+        cy.get('#email').type('test@example.com');
+        cy.get('#password').type('TestPassword123!');
+        cy.get('.login-button').click();
+        cy.url().should('include', '/dashboard');
+    });
+
+    it('should show an error for invalid login credentials', () => {
+        cy.get('#email').type('invalid-email');
+        cy.get('#password').type('InvalidPassword123!');
+        cy.get('.login-button').click();
+        cy.get('.error-message').should('contain', 'Invalid Email or Password');
+    });
+
+    it('should allow users to log out securely', () => {
+        // Mock API response for successful logout
+        cy.intercept('POST', '/logout', (req) => {
+            req.reply({ message: 'Logged out successfully' }); // Simulate a successful response
         }).as('registerUser'); // Alias the intercept for later reference
     
-        cy.get('#email').type('test@example.com')
-        cy.get('#password').type('password123')
-        cy.get('#register-button').click()
 
-        cy.get('@confirmEmail').should('be.visible')
-    });
-
-    it('should not allow registration without a valid email', () => {
-        cy.get('#email').clear()
-        cy.get('#password').type('password123')
-        cy.get('#register-button').click()
-
-        cy.get('[data-cy="error-email"]').should('be.visible')
+        cy.get('#email').type('test@example.com');
+        cy.get('#password').type('TestPassword123!');
+        cy.get('.login-button').click();
+        cy.get('.logout-button').click();
+        cy.get('@logoutResponse').should('contain', 'Logged Out Successfully');
     });
 });
 
-describe('Login Tests', () => {
+describe('Product Filtering Tests', () => {
     beforeEach(() => {
-      cy.clearLocalStorage()
-      cy.visit('/registration.html')
-      cy.url().should('contain', '/registration.html')
-    });
-
-    it('should log in with valid credentials', () => {
-        cy.get('#email').type('test@example.com')
-        cy.get('#password').type('password123')
-        cy.get('#login-button').click()
-        cy.url().should('contain', '/dashboard.html')
-    });
-
-    it('should show an error for invalid credentials', () => {
-        cy.get('#email').type('invalid@email')
-        cy.get('#password').type('wrongpassword')
-        cy.get('#login-button').click()
-
-        cy.get('[data-cy="error-credentials"]').should('be.visible')
-    });
-});
-
-describe('Product Search Tests', () => {
-    beforeEach(() => {
-        cy.clearLocalStorage()
-        cy.visit('/search.html')
-    });
-
-    it('should search for a product by name', () => {
-        cy.get('#search-input').type('test-product')
-        cy.get('#search-button').click()
-
-        cy.get('[data-cy="product-result"]').contains('Test Product')
+        cy.clearLocalStorage();
+        cy.visit('/products.html');
     });
 
     it('should filter products by category', () => {
-        cy.get('#category-select').select('Electronics')
-        cy.get('#search-button').click()
-        cy.get('[data-cy="product-result"]').contains('Test Product (Electronics)')
+        // Mock API response for product categories
+        const categories = [
+            { id: 1, name: 'Electronics' },
+            { id: 2, name: 'Fashion' },
+            { id: 3, name: 'Home & Kitchen' }
+        ];
+
+        cy.intercept('POST', '/products', (req) => {
+            req.reply(categories);
+        });
+
+        // Filter by Electronics
+        cy.get('.category-filter').contains('Electronics').click();
+        cy.url().should('include', '/electronics');
+
+        // Filter by Fashion
+        cy.get('.category-filter').contains('Fashion').click();
+        cy.url().should('include', '/fashion');
+    });
+
+    it('should filter products by price range', () => {
+        // Mock API response for product prices
+        const prices = [
+            { id: 1, price: 10.99 },
+            { id: 2, price: 29.99 },
+            { id: 3, price: 49.99 }
+        ];
+
+        cy.intercept('GET', '/products', (req) => {
+            req.reply(prices);
+        });
+
+        // Filter by $0 - $10
+        cy.get('.price-filter').contains('$0 - $10').click();
+        cy.url().should('include', '/price-range');
+
+        // Filter by $30 - $50
+        cy.get('.price-filter').contains('$30 - $50').click();
+        cy.url().should('include', '/price-range');
+    });
+});
+
+describe('Search Functionality Tests', () => {
+    beforeEach(() => {
+        cy.clearLocalStorage();
+        cy.visit('/products.html');
+    });
+
+    it('should search for products by keyword', () => {
+        // Mock API response for product search results
+        const searchResults = [
+            { id: 1, name: 'Apple Watch' },
+            { id: 2, name: 'Nike Shoes' },
+            { id: 3, name: 'Samsung TV' }
+        ];
+
+        cy.intercept('GET', '/search', (req) => {
+            req.reply(searchResults);
+        });
+
+        // Search for Apple Watch
+        cy.get('.search-input').type('Apple Watch');
+        cy.get('.search-button').click();
+        cy.url().should('include', '/search');
     });
 });

@@ -18,11 +18,9 @@ async function askOllama(requirementPath: string, outputFilePath: string) {
             });
             
             it('should log in with valid credentials', () => {
-                // test implementation
             });
             
             it('should show an error for invalid credentials', () => {
-                // test implementation
             });
         });
         `;

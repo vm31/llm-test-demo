@@ -7,7 +7,7 @@ async function askOllama(requirementPath: string, outputFilePath: string) {
         // Read the requirement doc
         const content = await readFile(requirementPath, 'utf-8');
         
-        const prompt = `You are a software test engineer. Generate functional test cases using Cypress in typescript based on the following requirement document: ${content}. Ensure the test file is formatted correctly, with all necessary braces, parentheses, and syntax. Generate only the file content without any commentary or extra text. Do not include the word "TypeScript" in the output. 
+        const prompt = `You are a software test engineer. Generate functional test cases using Cypress in typescript based on the following requirement document: ${content}. Ensure the test file is formatted correctly, with all necessary braces, parentheses, and syntax. Generate only the file content without any commentary or extra text. Do not include import command "import { cy } from 'cypress';" and the word "TypeScript" in the output. 
     
         Example:
         

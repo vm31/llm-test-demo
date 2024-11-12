@@ -51,4 +51,4 @@ async function askOllama(requirementPath: string, outputFilePath: string) {
 }
 
 // Call the function
-askOllama('requirement.txt', 'cypress/e2e/tests/registration.spec.cy.ts');
+askOllama('requirements/ecommerce.app.txt', 'cypress/e2e/tests/spec.cy.ts');

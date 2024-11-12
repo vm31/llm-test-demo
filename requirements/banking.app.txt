@@ -1,0 +1,10 @@
+User Requirements
+User requirements are a subset of functional requirements that address the needs and expectations of the end users. These are derived from understanding the goals, tasks, and workflows of the users.
+
+Focus on the specific functionalities that users expect from the system or software. They are typically expressed in user-friendly language and are often documented using techniques such as use cases or user stories.
+
+For example, in a banking application, some user requirements could include:
+
+Create a new account: Users should be able to create a new account by providing the necessary information.
+Update account information: Should be able to update their account details, such as contact information or password.
+Perform transactions: Should be able to perform various transactions, such as deposits, withdrawals, or transfers.

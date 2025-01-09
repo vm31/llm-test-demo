@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2022", // Supports modern Node.js features
+    "target": "ES2022",
     "module": "CommonJS",
     "lib": ["ES2022"],
     "types": ["node"],

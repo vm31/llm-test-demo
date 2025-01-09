@@ -1,2 +1,2 @@
 import { askOllama } from "../askOllama";
-askOllama('requirements/google.md', 'cypress/e2e/tests/google-app-spec.md');
+askOllama('requirements/swagger.ui.md', 'cypress/e2e/tests/swagger.regression.md');

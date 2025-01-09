@@ -33,24 +33,3 @@ export async function askOllama(requirementPath: string, outputFilePath: string)
         console.error('Error generating test cases:', error);
     }
 }
-
-export async function WriteResponseToFile (outputFilePath: string) {
-    
-    const response = await ollama.chat({ model: 'llama3.2', messages: [{ role: 'user', content: prompt }], stream: true });
-    console.log('prompt is:',prompt)
-
-    let generatedContent = '';
-
-    // Collect the streamed response
-    for await (const part of response) {
-        generatedContent += part.message.content;
-    }
-
-    // Ensure the directory exists
-    const dir = dirname(outputFilePath);
-    await mkdir(dir, { recursive: true });
-
-    // Write the generated test cases to the specified file path
-    await writeFile(outputFilePath, generatedContent.trim(), 'utf-8');
-
-}

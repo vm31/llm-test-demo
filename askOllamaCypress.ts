@@ -14,7 +14,7 @@ export async function askOllamaConvertMdToCypress(requirementPath: string, outpu
         describe('Login Tests', () => {
             beforeEach(() => {
                 cy.clearLocalStorage();
-                cy.visit('https://www.google.com/');
+                cy.visit('https://swagger.io/');
             });
             
             it('should log in with valid credentials', () => {

@@ -1,3 +1,6 @@
-registrationPage:
-  fullname: '#name'
-  email: '#email'
+loginPage:
+  usernameInputBox: '#username'
+  passwordInputBox: '#password'
+  loginButton: .btn
+  errorMessage: .alert
+

@@ -1,100 +1,67 @@
-Here are the functional test cases for each requirement:
+Here are the functional test cases for the given requirement document:
 
-**4.1 Login Page**
+**Test Case ID**: TC-SIG-001
+**Title**: Successful Login with Valid Credentials
+**Description**: Verify that a registered user can log in successfully with valid credentials.
+**Preconditions**: The user has an existing account and is able to access the login page.
 
-### TC_001: Verify UI Elements
+1. **Step 1**: Open the login page on the Swagger.io webpage.
+2. **Step 2**: Enter a valid email address and password into the respective input fields.
+3. **Step 3**: Click the "Sign In" button.
+4. **Step 4**: Verify that the user is redirected to their dashboard with a successful login message.
 
-* Preconditions: User has access to the login page
-* steps:
-  1. Log in to the application using a valid email address and password.
-  2. Verify that the input fields for email address and password are present and functional.
-  3. Verify that the "Sign In" button is visible and enabled.
-  4. Verify that the "Forgot Password" link is present but not clickable (initially).
-  5. Verify that the "Sign Up" link is present and clickable.
-* expected result: The UI elements are displayed correctly.
+**Test Case ID**: TC-SIG-002
+**Title**: Failed Login with Invalid Credentials
+**Description**: Verify that an unauthorized user cannot log in with invalid credentials.
+**Preconditions**: The user does not have an existing account.
 
-### TC_002: Validate Email Address
+1. **Step 1**: Open the login page on the Swagger.io webpage.
+2. **Step 2**: Enter an invalid email address and password into the respective input fields.
+3. **Step 3**: Click the "Sign In" button.
+4. **Step 4**: Verify that an error message is displayed with a failed login message.
 
-* Preconditions: User has access to the login page
-* steps:
-  1. Enter an invalid email address in the input field (e.g., with multiple spaces or special characters).
-  2. Click the "Sign In" button.
-  3. Verify that an error message is displayed indicating the email address is invalid.
-* expected result: An error message is displayed.
+**Test Case ID**: TC-SIG-003
+**Title**: Client-side Validation Error
+**Description**: Verify that client-side validation errors are handled correctly.
+**Preconditions**: The user enters invalid input in the email field (e.g., not following standard email format).
 
-### TC_003: Validate Password
+1. **Step 1**: Open the login page on the Swagger.io webpage.
+2. **Step 2**: Enter an invalid email address into the respective input field.
+3. **Step 3**: Click the "Sign In" button.
+4. **Step 4**: Verify that an error message is displayed with a client-side validation error.
 
-* Preconditions: User has access to the login page
-* steps:
-  1. Enter a password with fewer than 8 characters in the input field.
-  2. Click the "Sign In" button.
-  3. Verify that an error message is displayed indicating the password must be at least 8 characters long.
-* expected result: An error message is displayed.
+**Test Case ID**: TC-SIG-004
+**Title**: CAPTCHA Error Handling
+**Description**: Verify that CAPTCHA is implemented correctly and handles errors.
+**Preconditions**: The user enters multiple incorrect login credentials in succession.
 
-**4.2 Authentication API**
+1. **Step 1**: Open the login page on the Swagger.io webpage.
+2. **Step 2**: Enter multiple incorrect login credentials into the respective input fields.
+3. **Step 3**: Click the "Sign In" button.
+4. **Step 4**: Verify that a CAPTCHA is displayed and an error message is displayed with a failed login message.
 
-### TC_004: Verify User Authentication
+**Test Case ID**: TC-SIG-005
+**Title**: Forgot Password Functionality
+**Description**: Verify that the forgot password functionality works correctly.
+**Preconditions**: The user has forgotten their password and is able to access the login page.
 
-* Preconditions: User has access to the login page
-* steps:
-  1. Log in to the application using a valid email address and password.
-  2. Verify that the user is redirected to their dashboard after successful authentication.
-* expected result: The user is successfully authenticated.
+1. **Step 1**: Open the login page on the Swagger.io webpage.
+2. **Step 2**: Click the "Forgot Password" link.
+3. **Step 3**: Verify that a password recovery form is displayed.
+4. **Step 4**: Enter the email address associated with the account into the respective input field.
+5. **Step 5**: Click the "Submit" button.
+6. **Step 6**: Verify that an email with a password recovery link is sent to the user's registered email address.
 
-### TC_005: Handle Unavailable API Service
+**Test Case ID**: TC-SIG-006
+**Title**: Sign Up Functionality
+**Description**: Verify that the sign up functionality works correctly.
+**Preconditions**: The user does not have an existing account and is able to access the login page.
 
-* Preconditions: User has access to the login page
-* steps:
-  1. Simulate an unavailable API service by introducing a network error (e.g., using a tool like Fiddler).
-  2. Click the "Sign In" button.
-  3. Verify that an error message is displayed indicating the API service is unavailable.
-* expected result: An error message is displayed.
+1. **Step 1**: Open the login page on the Swagger.io webpage.
+2. **Step 2**: Click the "Sign Up" link.
+3. **Step 3**: Verify that a sign up form is displayed.
+4. **Step 4**: Enter the required information into the respective input fields.
+5. **Step 5**: Click the "Submit" button.
+6. **Step 6**: Verify that an account is created with the provided user credentials.
 
-**4.3 Error Handling**
-
-### TC_006: Display Friendly Error Messages
-
-* Preconditions: User has access to the login page
-* steps:
-  1. Enter incorrect credentials in the input fields.
-  2. Click the "Sign In" button.
-  3. Verify that an error message is displayed with a friendly tone (e.g., "Invalid email or password. Please try again.").
-
-### TC_007: Handle Empty Fields
-
-* Preconditions: User has access to the login page
-* steps:
-  1. Leave both input fields empty.
-  2. Click the "Sign In" button.
-  3. Verify that an error message is displayed indicating all required fields are missing.
-* expected result: An error message is displayed.
-
-**4.4 Security**
-
-### TC_008: Prevent SQL Injection
-
-* Preconditions: User has access to the login page
-* steps:
-  1. Enter a malicious SQL injection query in the input field (e.g., using an online tool).
-  2. Click the "Sign In" button.
-  3. Verify that no error is displayed or logged, indicating the query was not executed.
-
-### TC_009: Implement CAPTCHA
-
-* Preconditions: User has access to the login page
-* steps:
-  1. Enter multiple incorrect credentials in a short period (e.g., 5 times within 10 seconds).
-  2. Click the "Sign In" button.
-  3. Verify that a CAPTCHA is displayed after the third failed attempt, requiring the user to complete a challenge before accessing their account.
-
-**4.4 Security**
-
-### TC_010: Lock User Accounts
-
-* Preconditions: User has access to the login page
-* steps:
-  1. Enter multiple incorrect credentials consecutively (e.g., 5 times in a row).
-  2. Click the "Sign In" button.
-  3. Verify that the user's account is locked after five consecutive failed attempts, requiring them to wait a certain period before attempting to log in again.
-
-These test cases cover the main functional requirements and security aspects of the login page and authentication API. They help ensure that the application behaves as expected under various scenarios, providing a robust and secure sign-in experience for users.
+Let me know if you'd like to add or modify any test cases!

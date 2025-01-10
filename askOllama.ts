@@ -2,34 +2,54 @@ import { dirname } from 'path';
 import ollama from 'ollama';
 import { mkdir, readFile, writeFile } from 'fs/promises';
 
-export async function askOllama(requirementPath: string, outputFilePath: string) {
-    try {
-        // Read the requirement doc
-        const content = await readFile(requirementPath, 'utf-8');
-        
-        const prompt = `You are a software test engineer. Write functional test cases in for requirement document in simple english : ${content} `;
-        
 
-        // Send the prompt to Ollama
-        const response = await ollama.chat({ model: 'llama3.2', messages: [{ role: 'user', content: prompt }], stream: true });
-        console.log('prompt is:',prompt)
+async function readFileContent(filePath: string): Promise<string> {
+    try {
+        return await readFile(filePath, 'utf-8');
+    } catch (error) {
+        console.error(`Error reading file at ${filePath}:`, error);
+        throw error;
+    }
+}
+
+async function writeFileContent(filePath: string, content: string): Promise<void> {
+    try {
+        const dir = dirname(filePath);
+        await mkdir(dir, { recursive: true });
+        await writeFile(filePath, content.trim(), 'utf-8');
+        console.log(`Content successfully written to ${filePath}`);
+    } catch (error) {
+        console.error(`Error writing file at ${filePath}:`, error);
+        throw error;
+    }
+}
+
+async function askOllama(requirementPath: string, outputFilePath: string, customPrompt:string): Promise<void> {
+    try {
+        // Step 1: Read the requirement document
+        const content = await readFileContent(requirementPath);
+
+        // Step 2: Replace placeholders in the custom prompt with the content
+        const prompt = customPrompt.replace('{content}', content)
+        console.log('Generated prompt:', prompt);
+
+        // Step 3: Interact with Ollama
+        const response = await ollama.chat({
+            model: 'llama3.2',
+            messages: [{ role: 'user', content: prompt }],
+            stream: true,
+        });
 
         let generatedContent = '';
-
-        // Collect the streamed response
         for await (const part of response) {
             generatedContent += part.message.content;
         }
 
-        // Ensure the directory exists
-        const dir = dirname(outputFilePath);
-        await mkdir(dir, { recursive: true });
-
-        // Write the generated test cases to the specified file path
-        await writeFile(outputFilePath, generatedContent.trim(), 'utf-8');
-
-        console.log(`Cypress test cases generated and saved to ${outputFilePath}`);
+        // Step 4: Write the generated content to the output file
+        await writeFileContent(outputFilePath, generatedContent);
     } catch (error) {
-        console.error('Error generating test cases:', error);
+        console.error('Error generating test cases with Ollama:', error);
     }
 }
+
+export { readFileContent, writeFileContent, askOllama };

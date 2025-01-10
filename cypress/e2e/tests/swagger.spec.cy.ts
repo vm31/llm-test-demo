@@ -1,116 +1,55 @@
 describe('Login Tests', () => {
     beforeEach(() => {
         cy.clearLocalStorage();
-        cy.visit('https://www.example.com/login');
+        cy.visit('https://swagger.io/');
     });
 
-    it('TC_001: Verify UI Elements', () => {
-        cy.get('#emailInput').should('be.visible');
-        cy.get('#passwordInput').should('be.visible');
-        cy.get('#signInButton').should('be.visible');
-        cy.get('#forgotPasswordLink').should('be.visible');
-        cy.get('#signUpLink').should('be.visible');
-
-        cy.get('#emailInput').type('test@example.com');
-        cy.get('#passwordInput').type('password123');
-
-        cy.get('#signInButton').click();
-
-        cy.get('.error-message').should('contain', 'Invalid email or password. Please try again.');
+    it('should log in with valid credentials', () => {
+        cy.get('#email').type('valid-email@example.com');
+        cy.get('#password').type('valid-password');
+        cy.get('#sign-in').click();
+        cy.url().should('eq', 'https://swagger.io/dashboard');
+        cy.get('.login-success-message').should('contain', 'Login successful!');
     });
 
-    it('TC_002: Validate Email Address', () => {
-        cy.get('#emailInput').type('invalid-email');
-        cy.get('#passwordInput').type('password123');
-
-        cy.get('#signInButton').click();
-
-        cy.get('.error-message').should('contain', 'Invalid email address. Please try again.');
+    it('should show an error for invalid credentials', () => {
+        cy.get('#email').type('invalid-email@example.com');
+        cy.get('#password').type('invalid-password');
+        cy.get('#sign-in').click();
+        cy.get('.error-message').should('contain', 'Invalid email or password');
     });
 
-    it('TC_003: Validate Password', () => {
-        cy.get('#emailInput').type('test@example.com');
-        cy.get('#passwordInput').type('short-pasword');
-
-        cy.get('#signInButton').click();
-
-        cy.get('.error-message').should('contain', 'Password must be at least 8 characters long.');
+    it('should show client-side validation error for invalid email format', () => {
+        cy.get('#email').type('invalid-email');
+        cy.get('#sign-in').click();
+        cy.get('.validation-error').should('contain', 'Please enter a valid email address');
     });
 
-    it('TC_004: Verify User Authentication', () => {
-        cy.get('#emailInput').type('test@example.com');
-        cy.get('#passwordInput').type('password123');
-
-        cy.get('#signInButton').click();
-
-        cy.url().should('contain', '/dashboard');
-    });
-
-    it('TC_005: Handle Unavailable API Service', () => {
-        cy.intercept('GET', 'https://api.example.com/data', { status: 503, message: 'Service Unavailable' });
-
-        cy.get('#emailInput').type('test@example.com');
-        cy.get('#passwordInput').type('password123');
-
-        cy.get('#signInButton').click();
-
-        cy.get('.error-message').should('contain', 'API service is unavailable.');
-    });
-
-    it('TC_006: Display Friendly Error Messages', () => {
-        cy.get('#emailInput').type('invalid-email');
-        cy.get('#passwordInput').type('wrong-password');
-
-        cy.get('#signInButton').click();
-
-        cy.get('.error-message').should('contain', 'Invalid email or password. Please try again.');
-    });
-
-    it('TC_007: Handle Empty Fields', () => {
-        cy.get('#emailInput').clear();
-        cy.get('#passwordInput').clear();
-
-        cy.get('#signInButton').click();
-
-        cy.get('.error-message').should('contain', 'All required fields are missing.');
-    });
-
-    it('TC_008: Prevent SQL Injection', () => {
-        cy.intercept('POST', '/login', (req) => {
-            req.reply(200, 'Success');
-        });
-
-        cy.get('#emailInput').type('malicious-sql-injection');
-        cy.get('#passwordInput').type('password123');
-
-        cy.get('#signInButton').click();
-
-        cy.url().should('not.contain', '/dashboard');
-    });
-
-    it('TC_009: Implement CAPTCHA', () => {
-        cy.intercept('POST', '/login', (req) => {
-            req.reply(401, 'Unauthorized');
-        });
-
-        for (let i = 0; i < 3; i++) {
-            cy.get('#emailInput').type('wrong-password');
-            cy.get('#passwordInput').type('wrong-password');
-
-            cy.get('#signInButton').click();
-        }
-
+    it('should display CAPTCHA on multiple incorrect login attempts', () => {
+        cy.get('#email').type('wrong-password');
+        cy.get('#password').type('wrong-password');
+        cy.get('#sign-in').click();
         cy.get('.captcha').should('be.visible');
+        cy.get('#email').clear();
+        cy.get('#password').clear();
+        cy.get('#sign-in').click();
+        cy.get('.error-message').should('contain', 'Too many incorrect login attempts');
     });
 
-    it('TC_010: Lock User Accounts', () => {
-        for (let i = 0; i < 5; i++) {
-            cy.get('#emailInput').type('wrong-password');
-            cy.get('#passwordInput').type('wrong-password');
+    it('should send password recovery email on forgot password click', () => {
+        cy.get('#forgot-password').click();
+        cy.get('#email-input').type('user@example.com');
+        cy.get('#submit-button').click();
+        cy.url().should('include', '/recover-password');
+        cy.get('.email-sent-notification').should('be.visible');
+    });
 
-            cy.get('#signInButton').click();
-        }
-
-        cy.url().should('not.contain', '/dashboard');
+    it('should create new account on successful sign up', () => {
+        cy.get('#sign-up').click();
+        cy.get('#name-input').type('John Doe');
+        cy.get('#email-input').type('newuser@example.com');
+        cy.get('#password-input').type('NewPassword123');
+        cy.get('#submit-button').click();
+        cy.url().should('include', '/dashboard');
     });
 });

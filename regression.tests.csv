@@ -1,35 +1,26 @@
 Here are the functional test cases in table CSV format with comma-separated values:
 
-"""Test Case ID"",""Title"",""Step Description"",""Expected Result"""
+"""SNo,Title,Step Description,Expected Result"""
+"""1,Login Page - UI Elements,Verify that the email address text input field is present and functional,Email address field should be present and focusable"""
+"""2,Login Page - UI Elements,Verify that the password text input field is present and functional,Password field should be present and masked for security"""
+"""3,Login Page - UI Elements,Verify that the 'Sign In' button is present and clickable,Sign In button should be visible and enable when credentials are entered"""
+"""4,Login Page - UI Elements,Verify that the 'Forgot Password' link is present and functional,Forgot Password link should be visible and functional"""
+"""5,Login Page - UI Elements,Verify that the 'Sign Up' link is present and functional,Sign Up link should be visible and functional"""
+"""6,Login Page - Behavior,Clicking Sign In button triggers an API call to validate user credentials,API call should be successful with valid credentials"""
+"""7,Login Page - Behavior,Invalid email or password results in display of error message 'Invalid email or password. Please try again.',Error message should appear when credentials are invalid"""
+"""8,Login Page - Client-Side Validation,Email address field must follow standard email format,A valid email address should be accepted by the client-side validation"""
+"""9,Login Page - Client-Side Validation,Password must be at least 8 characters,Password of minimum length should be accepted by client-side validation"""
+"""10,Authentication API:Integrate with Swagger.io backend to verify credentials,API call should be successful with valid credentials"""
+"""11,Authentication API:Ensure authentication tokens are generated and securely stored in the browser,Authenticated user should receive a secure token"""
+"""12,Authentication API:Use industry-standard encryption protocols for API communication (e.g., HTTPS, OAuth),HTTPS or OAuth protocol should be used for authentication"""
+"""13,Error Handling:Display a friendly error message if API service is unavailable,'Unable to connect. Please try again later.' should appear when API service is unavailable"""
+"""14,Error Handling:Incorrect credentials entered results in display of error message 'Invalid email or password. Please try again.',Error message should appear when incorrect credentials are entered"""
+"""15,Error Handling:Required fields left empty results in display of error message 'Please fill out all required fields.',Error message should appear when required fields are empty"""
+"""16,Security:Protect against SQL injection,XSS and CSRF attacks should be prevented"""
+"""17,Security:L Lock user accounts after five consecutive failed login attempts,Captcha should appear after five failed attempts"""
+"""18,Security:Implement CAPTCHA for enhanced security after multiple failed attempts,CAPTCHA should appear after five or more failed attempts"""
+"""19,Concurrency Handling:The system must handle 10,000 concurrent login requests,System should be able to handle 10,000 concurrent requests without failure"""
+"""20,Response Time:The response time for login validation should not exceed 3 seconds,Login request should respond within 3 seconds"""
+"""21,Uptime:Ensure 99.9% uptime for the authentication service,Authentication system should be available 99.9% of the time"""
 
-"1,""Login Success"",""Click on 'Sign In' button and enter valid email address and password, then click 'Sign In'. The user is redirected to their dashboard."",""User is successfully logged in and can access their account."""
-
-"2,""Invalid Email"",""Click on 'Sign In' button and enter invalid email address and password, then click 'Sign In'. An error message 'Invalid email or password. Please try again.' is displayed."",""Error message is displayed correctly."""
-
-"3,""Invalid Password"",""Click on 'Sign In' button and enter valid email address but an incorrect password, then click 'Sign In'. An error message 'Invalid email or password. Please try again.' is displayed."",""Error message is displayed correctly."""
-
-"4,""Forgot Password Clicked"",""Click on the 'Forgot Password' link on the login page. The user is redirected to a password recovery page."",""The user is redirected to a password recovery page successfully."""
-
-"5,""Password Recovery Successful"",""Enter valid email address and follow password recovery instructions. The user receives an email with password reset instructions."",""User receives email with password reset instructions correctly."""
-
-"6,""Invalid Credentials Displayed on Dashboard"",""Click on 'Sign In' button but enter invalid credentials, then click 'Sign In'. The dashboard displays the error message 'Invalid email or password. Please try again.'."",""Error message is displayed correctly on dashboard."""
-
-"7,""Login Form Validation"",""Enter empty fields and submit the login form. An error message 'Please fill out all required fields.' is displayed."",""Error message is displayed correctly when required fields are left empty."""
-
-"8,""Multi-Device Login"",""Access the login page from multiple devices (desktop, mobile) and successfully log in using valid credentials."",""The system allows seamless login across multiple devices."""
-
-"9,""API Call Successful"",""Send an API call to validate user credentials. The server responds with a success message."",""The server responds with a success message correctly."""
-
-"10,""Failed Login Attempts"",""Attempt to log in with invalid credentials five times. The system displays the error message 'Unable to connect. Please try again later.' after the fifth attempt."",""The system prevents excessive login attempts and displays an appropriate error message."""
-
-"11,""CAPTCHA Displayed"",""Attempt to log in with incorrect credentials multiple times. The system displays a CAPTCHA challenge after three failed attempts."",""The system displays a CAPTCHA challenge after a specified number of failed login attempts."""
-
-"12,""Data Security Tested"",""Send API calls to test the system's data security features (SQL injection, XSS, CSRF). The system responds with an error message indicating that the request is blocked."",""The system blocks malicious requests correctly and prevents SQL injection, XSS, and CSRF attacks."""
-
-"13,""Concurrency Limit Tested"",""Simulate 10,000 concurrent login requests. The system handles the load without errors."",""The system can handle a specified number of concurrent login requests correctly."""
-
-"14,""Response Time Tested"",""Measure the response time for login validation (less than 3 seconds). The system responds within the specified time limit."",""The system responds within the specified time limit for login validation."""
-
-"15,""Uptime Tested"",""Simulate various network conditions to test the system's uptime (99.9%). The system remains available with minimal downtime."",""The system maintains a high uptime of at least 99.9% under different network conditions."""
-
-"Please note that these are just some examples of functional test cases, and you may need to add or modify them based on your specific testing requirements."
+Please let me know if you'd like me to add or modify any sections!

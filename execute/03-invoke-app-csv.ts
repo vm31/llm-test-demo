@@ -1,7 +1,7 @@
 import { convertMarkdownToCsv } from "../converter";
 
-const markdownFilePath = "cypress/e2e/tests/swagger.regression.md";
-const outputFilePath = "output.csv";
+const markdownFilePath = "tests/swagger.regression.md";
+const outputFilePath = "regression.tests.csv";
 
 
 convertMarkdownToCsv(markdownFilePath, outputFilePath)

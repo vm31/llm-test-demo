@@ -1,0 +1,26 @@
+Here are the functional test cases in table CSV format with comma-separated values:
+
+"SNo,Title,Step Description,Expected Result"
+"1,Login Page - UI Elements,Verify that the email address text input field is present and functional,Email address field should be present and focusable"
+"2,Login Page - UI Elements,Verify that the password text input field is present and functional,Password field should be present and masked for security"
+"3,Login Page - UI Elements,Verify that the 'Sign In' button is present and clickable,Sign In button should be visible and enable when credentials are entered"
+"4,Login Page - UI Elements,Verify that the 'Forgot Password' link is present and functional,Forgot Password link should be visible and functional"
+"5,Login Page - UI Elements,Verify that the 'Sign Up' link is present and functional,Sign Up link should be visible and functional"
+"6,Login Page - Behavior,Clicking Sign In button triggers an API call to validate user credentials,API call should be successful with valid credentials"
+"7,Login Page - Behavior,Invalid email or password results in display of error message 'Invalid email or password. Please try again.',Error message should appear when credentials are invalid"
+"8,Login Page - Client-Side Validation,Email address field must follow standard email format,A valid email address should be accepted by the client-side validation"
+"9,Login Page - Client-Side Validation,Password must be at least 8 characters,Password of minimum length should be accepted by client-side validation"
+"10,Authentication API:Integrate with Swagger.io backend to verify credentials,API call should be successful with valid credentials"
+"11,Authentication API:Ensure authentication tokens are generated and securely stored in the browser,Authenticated user should receive a secure token"
+"12,Authentication API:Use industry-standard encryption protocols for API communication (e.g., HTTPS, OAuth),HTTPS or OAuth protocol should be used for authentication"
+"13,Error Handling:Display a friendly error message if API service is unavailable,'Unable to connect. Please try again later.' should appear when API service is unavailable"
+"14,Error Handling:Incorrect credentials entered results in display of error message 'Invalid email or password. Please try again.',Error message should appear when incorrect credentials are entered"
+"15,Error Handling:Required fields left empty results in display of error message 'Please fill out all required fields.',Error message should appear when required fields are empty"
+"16,Security:Protect against SQL injection,XSS and CSRF attacks should be prevented"
+"17,Security:L Lock user accounts after five consecutive failed login attempts,Captcha should appear after five failed attempts"
+"18,Security:Implement CAPTCHA for enhanced security after multiple failed attempts,CAPTCHA should appear after five or more failed attempts"
+"19,Concurrency Handling:The system must handle 10,000 concurrent login requests,System should be able to handle 10,000 concurrent requests without failure"
+"20,Response Time:The response time for login validation should not exceed 3 seconds,Login request should respond within 3 seconds"
+"21,Uptime:Ensure 99.9% uptime for the authentication service,Authentication system should be available 99.9% of the time"
+
+Please let me know if you'd like me to add or modify any sections!

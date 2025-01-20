@@ -1,7 +1,7 @@
 import { convertMarkdownToCsv } from "../converter";
 
 const markdownFilePath = "tests/swagger.regression.md";
-const outputFilePath = "regression.tests.csv";
+const outputFilePath = "tests/regression.tests.csv";
 
 
 convertMarkdownToCsv(markdownFilePath, outputFilePath)

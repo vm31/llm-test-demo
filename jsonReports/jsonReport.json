@@ -70,7 +70,7 @@
         {
           "title": "Login Tests",
           "file": "swagger.spec.ts",
-          "line": 4,
+          "line": 3,
           "column": 6,
           "specs": [
             {
@@ -87,37 +87,45 @@
                   "results": [
                     {
                       "workerIndex": 0,
-                      "status": "failed",
-                      "duration": 8093,
+                      "status": "timedOut",
+                      "duration": 30069,
                       "error": {
-                        "message": "TimeoutError: locator.click: Timeout 5000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('text=Sign In')\u001b[22m\n\u001b[2m    - locator resolved to <a title=\"Sign In\" href=\"https://app.swaggerhub.com/login?channel=direct\" class=\"btn c-btn c-btn-outline btn-nav txt-clr-neutral-13\">Sign In</a>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"ch2-container ch2-theme-default  ch2-style-dark ch2-ea ch2-block\">…</div> from <div data-region=\"eu\" data-nosnippet=\"true\" class=\"ch2 ch2-region-eu\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"ch2-container ch2-theme-default  ch2-style-dark ch2-ea ch2-block\">…</div> from <div data-region=\"eu\" data-nosnippet=\"true\" class=\"ch2 ch2-region-eu\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    9 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"ch2-container ch2-theme-default  ch2-style-dark ch2-ea ch2-block\">…</div> from <div data-region=\"eu\" data-nosnippet=\"true\" class=\"ch2 ch2-region-eu\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n",
-                        "stack": "TimeoutError: locator.click: Timeout 5000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('text=Sign In')\u001b[22m\n\u001b[2m    - locator resolved to <a title=\"Sign In\" href=\"https://app.swaggerhub.com/login?channel=direct\" class=\"btn c-btn c-btn-outline btn-nav txt-clr-neutral-13\">Sign In</a>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"ch2-container ch2-theme-default  ch2-style-dark ch2-ea ch2-block\">…</div> from <div data-region=\"eu\" data-nosnippet=\"true\" class=\"ch2 ch2-region-eu\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"ch2-container ch2-theme-default  ch2-style-dark ch2-ea ch2-block\">…</div> from <div data-region=\"eu\" data-nosnippet=\"true\" class=\"ch2 ch2-region-eu\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    9 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"ch2-container ch2-theme-default  ch2-style-dark ch2-ea ch2-block\">…</div> from <div data-region=\"eu\" data-nosnippet=\"true\" class=\"ch2 ch2-region-eu\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\n    at C:\\Users\\vaishnavi.middela\\workspace\\llm-test-demo\\tests\\swagger.spec.ts:8:40",
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n    at C:\\Users\\vaishnavi.middela\\workspace\\llm-test-demo\\tests\\swagger.spec.ts:4:8",
                         "location": {
                           "file": "C:\\Users\\vaishnavi.middela\\workspace\\llm-test-demo\\tests\\swagger.spec.ts",
-                          "column": 40,
-                          "line": 8
+                          "column": 8,
+                          "line": 4
                         },
-                        "snippet": "\u001b[0m \u001b[90m  6 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'https://swagger.io'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m  7 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m'text=Sign In'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'text=Sign In'\u001b[39m)\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m  9 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 10 |\u001b[39m\n \u001b[90m 11 |\u001b[39m   test\u001b[33m.\u001b[39monly(\u001b[32m'should log in with valid credentials'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\u001b[0m"
+                        "snippet": "\u001b[0m \u001b[90m 2 |\u001b[39m\n \u001b[90m 3 |\u001b[39m test\u001b[33m.\u001b[39mdescribe(\u001b[32m'Login Tests'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 4 |\u001b[39m   test\u001b[33m.\u001b[39mbeforeEach(\u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m   |\u001b[39m        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 5 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'https://swagger.io'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 6 |\u001b[39m     \u001b[36mconst\u001b[39m acceptCookiesBtn \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[32m'Allow all cookies'\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 7 |\u001b[39m     \u001b[36mawait\u001b[39m expect(acceptCookiesBtn)\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\u001b[0m"
                       },
                       "errors": [
                         {
                           "location": {
                             "file": "C:\\Users\\vaishnavi.middela\\workspace\\llm-test-demo\\tests\\swagger.spec.ts",
-                            "column": 40,
-                            "line": 8
+                            "column": 8,
+                            "line": 4
                           },
-                          "message": "TimeoutError: locator.click: Timeout 5000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('text=Sign In')\u001b[22m\n\u001b[2m    - locator resolved to <a title=\"Sign In\" href=\"https://app.swaggerhub.com/login?channel=direct\" class=\"btn c-btn c-btn-outline btn-nav txt-clr-neutral-13\">Sign In</a>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"ch2-container ch2-theme-default  ch2-style-dark ch2-ea ch2-block\">…</div> from <div data-region=\"eu\" data-nosnippet=\"true\" class=\"ch2 ch2-region-eu\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"ch2-container ch2-theme-default  ch2-style-dark ch2-ea ch2-block\">…</div> from <div data-region=\"eu\" data-nosnippet=\"true\" class=\"ch2 ch2-region-eu\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    9 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"ch2-container ch2-theme-default  ch2-style-dark ch2-ea ch2-block\">…</div> from <div data-region=\"eu\" data-nosnippet=\"true\" class=\"ch2 ch2-region-eu\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\n\n\u001b[0m \u001b[90m  6 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'https://swagger.io'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m  7 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m'text=Sign In'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'text=Sign In'\u001b[39m)\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m  9 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 10 |\u001b[39m\n \u001b[90m 11 |\u001b[39m   test\u001b[33m.\u001b[39monly(\u001b[32m'should log in with valid credentials'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[2m    at C:\\Users\\vaishnavi.middela\\workspace\\llm-test-demo\\tests\\swagger.spec.ts:8:40\u001b[22m"
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n\u001b[0m \u001b[90m 2 |\u001b[39m\n \u001b[90m 3 |\u001b[39m test\u001b[33m.\u001b[39mdescribe(\u001b[32m'Login Tests'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 4 |\u001b[39m   test\u001b[33m.\u001b[39mbeforeEach(\u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m   |\u001b[39m        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 5 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'https://swagger.io'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 6 |\u001b[39m     \u001b[36mconst\u001b[39m acceptCookiesBtn \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[32m'Allow all cookies'\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 7 |\u001b[39m     \u001b[36mawait\u001b[39m expect(acceptCookiesBtn)\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at C:\\Users\\vaishnavi.middela\\workspace\\llm-test-demo\\tests\\swagger.spec.ts:4:8\u001b[22m"
+                        },
+                        {
+                          "location": {
+                            "file": "C:\\Users\\vaishnavi.middela\\workspace\\llm-test-demo\\tests\\swagger.spec.ts",
+                            "column": 16,
+                            "line": 10
+                          },
+                          "message": "Error: page.waitForURL: Test timeout of 30000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation to \"https://auth.id.smartbear.com/\" until \"load\"\n============================================================\n\n\u001b[0m \u001b[90m  8 |\u001b[39m     \u001b[36mawait\u001b[39m acceptCookiesBtn\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m  9 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByTitle(\u001b[32m'Sign In'\u001b[39m)\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 10 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'https://auth.id.smartbear.com/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 11 |\u001b[39m     expect(page\u001b[33m.\u001b[39murl())\u001b[33m.\u001b[39mtoBe(\u001b[32m'https://auth.id.smartbear.com/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 12 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 13 |\u001b[39m\u001b[0m\n\u001b[2m    at C:\\Users\\vaishnavi.middela\\workspace\\llm-test-demo\\tests\\swagger.spec.ts:10:16\u001b[22m"
                         }
                       ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-01-17T14:04:23.077Z",
+                      "startTime": "2025-01-20T11:14:29.903Z",
                       "attachments": [],
                       "errorLocation": {
                         "file": "C:\\Users\\vaishnavi.middela\\workspace\\llm-test-demo\\tests\\swagger.spec.ts",
-                        "column": 40,
-                        "line": 8
+                        "column": 8,
+                        "line": 4
                       }
                     }
                   ],
@@ -126,7 +134,7 @@
               ],
               "id": "4d29396678c8c3ba9a4d-7fffabca4b26f1e13057",
               "file": "swagger.spec.ts",
-              "line": 11,
+              "line": 14,
               "column": 8
             }
           ]
@@ -136,8 +144,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-01-17T14:04:22.339Z",
-    "duration": 9244.354,
+    "startTime": "2025-01-20T11:14:29.254Z",
+    "duration": 31305.394,
     "expected": 0,
     "skipped": 0,
     "unexpected": 1,

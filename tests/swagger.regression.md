@@ -1,101 +1,115 @@
-Here are some functional test cases based on the provided Business Requirement Document (BRD) for User Sign-In Functionality on Swagger.io:
+Here are the functional test cases for the user sign-in functionality on Swagger.io:
 
-**Test Case 1: Successful Login**
+**Test Case 1: Valid Login Credentials**
 
 * Preconditions:
-	+ The user has an existing account.
-	+ The backend authentication service is operational.
+	+ User has an existing account
+	+ Backend authentication service is operational
 * Steps:
- 1. Open the login page in a web browser.
- 2. Enter valid email address and password (masked).
- 3. Click on the "Sign In" button.
+  1. Launch the login page in a supported browser (desktop and mobile).
+  2. Enter valid email address and password.
+  3. Click the "Sign In" button.
 * Expected Result:
 	+ The user is redirected to their dashboard.
-	+ No error messages are displayed.
+	+ No error message is displayed.
 
 **Test Case 2: Invalid Email Address**
 
 * Preconditions:
-	+ The user has an existing account.
-	+ The backend authentication service is operational.
+	+ User has an existing account
+	+ Backend authentication service is operational
 * Steps:
- 1. Open the login page in a web browser.
- 2. Enter invalid email address and valid password (masked).
- 3. Click on the "Sign In" button.
+  1. Launch the login page in a supported browser (desktop and mobile).
+  2. Enter invalid email address.
+  3. Click the "Sign In" button.
 * Expected Result:
-	+ An error message "Invalid email or password. Please try again." is displayed.
+	+ An error message is displayed: "Invalid email or password. Please try again."
+	+ No user is redirected to their dashboard.
 
 **Test Case 3: Invalid Password**
 
 * Preconditions:
-	+ The user has an existing account.
-	+ The backend authentication service is operational.
+	+ User has an existing account
+	+ Backend authentication service is operational
 * Steps:
- 1. Open the login page in a web browser.
- 2. Enter valid email address and invalid password (masked).
- 3. Click on the "Sign In" button.
+  1. Launch the login page in a supported browser (desktop and mobile).
+  2. Enter valid email address but invalid password.
+  3. Click the "Sign In" button.
 * Expected Result:
-	+ An error message "Invalid email or password. Please try again." is displayed.
+	+ An error message is displayed: "Invalid email or password. Please try again."
+	+ No user is redirected to their dashboard.
 
-**Test Case 4: Empty Email Field**
+**Test Case 4: Empty Fields**
 
 * Preconditions:
-	+ The user has an existing account.
-	+ The backend authentication service is operational.
+	+ User has an existing account
+	+ Backend authentication service is operational
 * Steps:
- 1. Open the login page in a web browser.
- 2. Leave the email field empty and enter valid password (masked).
- 3. Click on the "Sign In" button.
+  1. Launch the login page in a supported browser (desktop and mobile).
+  2. Leave email address field empty.
+  3. Click the "Sign In" button.
 * Expected Result:
-	+ An error message "Please fill out all required fields." is displayed.
+	+ An error message is displayed: "Please fill out all required fields."
+	+ No user is redirected to their dashboard.
 
-**Test Case 5: Empty Password Field**
+**Test Case 5: Successful Password Recovery**
 
 * Preconditions:
-	+ The user has an existing account.
-	+ The backend authentication service is operational.
+	+ User has an existing account
+	+ Backend authentication service is operational
 * Steps:
- 1. Open the login page in a web browser.
- 2. Enter valid email address and leave the password field empty.
- 3. Click on the "Sign In" button.
+  1. Launch the login page in a supported browser (desktop and mobile).
+  2. Click the "Forgot Password" link.
+  3. Enter valid email address.
+  4. Click the "Send Recovery Email" button.
+  5. Verify recovery email by clicking on the verification link.
 * Expected Result:
-	+ An error message "Please fill out all required fields." is displayed.
+	+ The user is redirected to their dashboard with a new password.
 
-**Test Case 6: Forgot Password**
+**Test Case 6: CAPTCHA After Multiple Failed Attempts**
 
 * Preconditions:
-	+ The user has an existing account.
-	+ The backend authentication service is operational.
+	+ User has an existing account
+	+ Backend authentication service is operational
 * Steps:
- 1. Open the login page in a web browser.
- 2. Click on the "Forgot Password" link.
- 3. Enter valid email address and follow password recovery instructions.
+  1. Launch the login page in a supported browser (desktop and mobile).
+  2. Enter invalid email address for five consecutive attempts.
+  3. Click the "Sign In" button after the fifth attempt.
 * Expected Result:
-	+ A success message is displayed, indicating that password recovery has been initiated.
+	+ A CAPTCHA is displayed to verify user identity.
 
-**Test Case 7: CAPTCHA**
+**Test Case 7: SQL Injection, XSS, and CSRF Protection**
 
 * Preconditions:
-	+ The user has an existing account.
-	+ The backend authentication service is operational.
+	+ User has an existing account
+	+ Backend authentication service is operational
 * Steps:
- 1. Open the login page in a web browser.
- 2. Enter valid email address and password (masked).
- 3. Click on the "Sign In" button.
- 4. Receive CAPTCHA to complete.
+  1. Launch the login page in a supported browser (desktop and mobile).
+  2. Enter malicious input (e.g., SQL injection or XSS attack) in email address field.
+  3. Click the "Sign In" button.
 * Expected Result:
-	+ After completing CAPTCHA, the user is redirected to their dashboard.
+	+ The system prevents unauthorized access and displays an error message.
 
-**Test Case 8: Lockout**
+**Test Case 8: Lockout Mechanism**
 
 * Preconditions:
-	+ The user has multiple failed login attempts.
-	+ The backend authentication service is operational.
+	+ User has an existing account
+	+ Backend authentication service is operational
 * Steps:
- 1. Open the login page in a web browser.
- 2. Enter invalid email address and password (masked).
- 3. Repeat steps 1-2 five consecutive times.
+  1. Launch the login page in a supported browser (desktop and mobile).
+  2. Enter invalid email address for five consecutive attempts.
+  3. Click the "Sign In" button after the fifth attempt.
 * Expected Result:
-	+ The account is locked, displaying an error message indicating multiple failed login attempts.
+	+ The user's account is locked out for a specified period.
 
-Let me know if you'd like to add or modify any test cases!
+**Test Case 9: Uptime and Performance**
+
+* Preconditions:
+	+ Backend authentication service is operational
+* Steps:
+  1. Launch multiple login requests concurrently (10,000).
+  2. Monitor the system's response time for each request.
+* Expected Result:
+	+ The system responds within the specified time limit (< 3 seconds).
+
+Let me know if you want to add or modify any sections!

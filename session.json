@@ -1,0 +1,5 @@
+{
+  "requirementPath": "requirements/swagger.ui.md",
+  "outputFilePath": "tests/swagger.regression.md",
+  "customPrompt": "You are a software test engineer. Write functional test cases in simple English for the following requirement document:\\n\\n{content}."
+}

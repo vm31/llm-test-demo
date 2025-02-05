@@ -51,5 +51,22 @@ async function askOllama(requirementPath: string, outputFilePath: string, custom
         console.error('Error generating test cases with Ollama:', error);
     }
 }
+// Command-line execution logic
+if (require.main === module) {
+    const args = process.argv.slice(2);
 
-export { readFileContent, writeFileContent, askOllama };
+    if (args.length < 3) {
+        console.error('Usage: npx ts-node askOllama.ts <requirementPath> <outputFilePath> <customPrompt>');
+        process.exit(1);
+    }
+
+    const [requirementPath, outputFilePath, customPrompt] = args;
+
+    (async () => {
+        try {
+            await askOllama(requirementPath, outputFilePath, customPrompt);
+        } catch (error) {
+            console.error('Error executing askOllama:', error);
+        }
+    })();
+}

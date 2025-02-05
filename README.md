@@ -17,3 +17,8 @@ async function
  working with call back
  working with promises
 -----
+# playwright dependencies
+npm install @playwright/test
+
+npx playwright install
+

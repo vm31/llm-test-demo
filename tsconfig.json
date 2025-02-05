@@ -9,9 +9,6 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "strict": true
-  },
-    "include": [
-      "cypress/**/*.ts"
-    ]
+  }
   }
   

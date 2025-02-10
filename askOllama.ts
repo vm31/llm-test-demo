@@ -33,6 +33,7 @@ async function askOllama(requirementPath: string, outputFilePath: string, custom
         const playwrightExample = `
 >> Example:
 >> import { test, expect } from '@playwright/test';
+>> import { utils } from 'support/utils'
 >> test.describe('Login Tests', () => {
 >>   test.beforeEach(async ({ page }) => {
 >>     await page.goto('https://swagger.io');

@@ -24,21 +24,52 @@ async function writeFileContent(filePath: string, content: string): Promise<void
     }
 }
 
-async function askOllama(requirementPath: string, outputFilePath: string, customPrompt:string): Promise<void> {
+async function askOllama(requirementPath: string, outputFilePath: string, customPrompt: string, isPlaywright:boolean): Promise<void> {
     try {
         // Step 1: Read the requirement document
         const content = await readFileContent(requirementPath);
 
-        // Step 2: Replace placeholders in the custom prompt with the content
-        const prompt = customPrompt.replace('{content}', content)
-        console.log('Generated prompt:', prompt);
+        // Example Playwright Test Case Structure
+        const playwrightExample = `
+>> Example:
+>> import { test, expect } from '@playwright/test';
+>> test.describe('Login Tests', () => {
+>>   test.beforeEach(async ({ page }) => {
+>>     await page.goto('https://swagger.io');
+>>     const acceptCoockiesBtn = await page.getByRole('button', { name: 'Allow all cookies' }); 
+>>     await expect(acceptCoockiesBtn).toBeVisible();
+>>     acceptCoockiesBtn.click();
+>>     page.getByTitle('Sign In').click();
+>>   });
+>>
+>>   test('should log in with valid credentials', async ({ page }) => {
+>>     await page.locator('text=Sign In').click();
+>>     // Add test implementation here
+>>   });
+>>
+>>   test('should show an error for invalid credentials', async ({ page }) => {
+>>     // Add test implementation here
+>>   });
+>> });
+`;
 
-        // Step 3: Interact with Ollama
-        const response = await ollama.chat({
-            model: 'llama3.2',
-            messages: [{ role: 'user', content: prompt }],
-            stream: true,
-        });
+   // Step 2: Concatenate requirement document with prompt
+   let prompt = `${customPrompt}\n\n${content}`;
+
+   // Step 3: Append example structure only for Playwright test cases
+   if (isPlaywright) {
+       prompt += `\n\n${playwrightExample}`;
+   }
+
+   console.log('Generated prompt:', prompt);
+
+   // Step 4: Interact with Ollama
+   const response = await ollama.chat({
+       model: 'llama3.2',
+       messages: [{ role: 'user', content: prompt }],
+       stream: true,
+   });
+
 
         let generatedContent = '';
         for await (const part of response) {
@@ -51,20 +82,21 @@ async function askOllama(requirementPath: string, outputFilePath: string, custom
         console.error('Error generating test cases with Ollama:', error);
     }
 }
+
 // Command-line execution logic
 if (require.main === module) {
     const args = process.argv.slice(2);
-
     if (args.length < 3) {
-        console.error('Usage: npx ts-node askOllama.ts <requirementPath> <outputFilePath> <customPrompt>');
+        console.error('Usage: npx ts-node askOllama.ts <requirementPath> <outputFilePath> <customPrompt> [--playwright]');
         process.exit(1);
     }
 
-    const [requirementPath, outputFilePath, customPrompt] = args;
+    const [requirementPath, outputFilePath, customPrompt, playwrightFlag] = args;
+    const isPlaywright = playwrightFlag === '--playwright';
 
     (async () => {
         try {
-            await askOllama(requirementPath, outputFilePath, customPrompt);
+            await askOllama(requirementPath, outputFilePath, customPrompt, isPlaywright);
         } catch (error) {
             console.error('Error executing askOllama:', error);
         }

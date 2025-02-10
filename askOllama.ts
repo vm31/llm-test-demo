@@ -34,10 +34,11 @@ async function askOllama(requirementPath: string, outputFilePath: string, custom
 >> Example:
 >> import { test, expect } from '@playwright/test';
 >> import { utils } from '../support/utils';
+>>
 >> test.describe('Login Tests', () => {
 >>   test.beforeEach(async ({ page }) => {
->>     utils.launch('https://swagger.io');
->>     utils.clickElementByRole(page, 'button','Allow all cookies')
+>>     utils.launch(page, 'https://swagger.io');
+>>     utils.clickByRole(page, 'button','Allow all cookies')
 >>     utils.clickElementText(page,'Sign In')
 >>   });
 >>

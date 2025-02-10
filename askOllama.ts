@@ -33,14 +33,12 @@ async function askOllama(requirementPath: string, outputFilePath: string, custom
         const playwrightExample = `
 >> Example:
 >> import { test, expect } from '@playwright/test';
->> import { utils } from 'support/utils'
+>> import { utils } from '../support/utils';
 >> test.describe('Login Tests', () => {
 >>   test.beforeEach(async ({ page }) => {
->>     await page.goto('https://swagger.io');
->>     const acceptCoockiesBtn = await page.getByRole('button', { name: 'Allow all cookies' }); 
->>     await expect(acceptCoockiesBtn).toBeVisible();
->>     acceptCoockiesBtn.click();
->>     page.getByTitle('Sign In').click();
+>>     utils.launch('https://swagger.io');
+>>     utils.clickElementByRole(page, 'button','Allow all cookies')
+>>     utils.clickElementText(page,'Sign In')
 >>   });
 >>
 >>   test('should log in with valid credentials', async ({ page }) => {

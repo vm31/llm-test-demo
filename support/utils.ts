@@ -32,4 +32,9 @@ export const utils = {
         const fileContents = await fs.readFile('locators.yaml', 'utf8');
         return yaml.load(fileContents);
     },
+    clickElementByRole: async (page: Page, role: 'button' | 'link' | 'checkbox' | 'alert' | 'dialog' | string, nameBtn: string): Promise<void> => {
+        //const acceptCoockiesBtn = await page.getByRole('button', { name: 'Allow all cookies' }); 
+        const element = page.locator(`[role="${role}"][name="${nameBtn}"]`);
+        await element.click(); // Example action
+    }
 };

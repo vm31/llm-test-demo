@@ -34,10 +34,10 @@ async function askOllama(requirementPath: string, outputFilePath: string, custom
 >> Example:
 >> import { test, expect } from '@playwright/test';
 >> import { utils } from '../support/utils';
->> test.use({
->> launchOptions: {
->>  slowMo: 1000, // Slows down actions by 1000ms (1 second)
- >>  },
+>>  test.use({
+>>   launchOptions: {
+>>   slowMo: 3000, // Slows down actions by 1000ms (1 second)
+>>  },
 >> });
 >> test.describe('', () => {
 >>   test.beforeEach(async ({ page }) => {

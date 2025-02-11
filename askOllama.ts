@@ -34,20 +34,20 @@ async function askOllama(requirementPath: string, outputFilePath: string, custom
 >> Example:
 >> import { test, expect } from '@playwright/test';
 >> import { utils } from '../support/utils';
->>
->> test.describe('Login Tests', () => {
+>> test.use({
+>> launchOptions: {
+>>  slowMo: 1000, // Slows down actions by 1000ms (1 second)
+ >>  },
+>> });
+>> test.describe('', () => {
 >>   test.beforeEach(async ({ page }) => {
->>     utils.launch(page, 'https://swagger.io');
->>     utils.clickByRole(page, 'button','Allow all cookies')
->>     utils.clickElementText(page,'Sign In')
 >>   });
 >>
->>   test('should log in with valid credentials', async ({ page }) => {
->>     await page.locator('text=Sign In').click();
+>>   test('', async ({ page }) => {
 >>     // Add test implementation here
 >>   });
 >>
->>   test('should show an error for invalid credentials', async ({ page }) => {
+>>   test('', async ({ page }) => {
 >>     // Add test implementation here
 >>   });
 >> });

@@ -41,6 +41,8 @@ async function askOllama(requirementPath: string, outputFilePath: string, custom
 >> });
 >> test.describe('', () => {
 >>   test.beforeEach(async ({ page }) => {
+   >> utils.clickByRole(page, 'button','Allow all cookies')
+     >>utils.clickElementText(page,'Sign In')
 >>   });
 >>
 >>   test('', async ({ page }) => {

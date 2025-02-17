@@ -1,107 +1,135 @@
-import { dirname } from 'path'; 
-import ollama from 'ollama';
-import { mkdir, readFile, writeFile } from 'fs/promises';
+import { utils } from './support/utils';  // Replace with your file utility imports
+import ollama from 'ollama';  // Replace with actual Ollama API integration
 
+// Function to generate test cases based on the provided step
+async function askOllama(
+  requirementPath: string,
+  outputFilePath: string,
+  customPrompt: string,
+  isPlaywright: boolean,
+  isUnitTest: boolean,
+  isEnglish: boolean
+): Promise<void> {
+  try {
+    // Step 1: Read the business requirement document
+    const content = await utils.readFileContent(requirementPath);
 
-async function readFileContent(filePath: string): Promise<string> {
-    try {
-        return await readFile(filePath, 'utf-8');
-    } catch (error) {
-        console.error(`Error reading file at ${filePath}:`, error);
-        throw error;
-    }
-}
-
-async function writeFileContent(filePath: string, content: string): Promise<void> {
-    try {
-        const dir = dirname(filePath);
-        await mkdir(dir, { recursive: true });
-        await writeFile(filePath, content.trim(), 'utf-8');
-        console.log(`Content successfully written to ${filePath}`);
-    } catch (error) {
-        console.error(`Error writing file at ${filePath}:`, error);
-        throw error;
-    }
-}
-
-async function askOllama(requirementPath: string, outputFilePath: string, customPrompt: string, isPlaywright:boolean): Promise<void> {
-    try {
-        // Step 1: Read the requirement document
-        const content = await readFileContent(requirementPath);
-
-        // Example Playwright Test Case Structure
-        const playwrightExample = `
+    // Example Playwright Test Case Structure (only used if Playwright is selected)
+    const examplePlaywrightTestStructure = `
 >> Example:
 >> import { test, expect } from '@playwright/test';
->> import { utils } from '../support/utils';
->>  test.use({
->>   launchOptions: {
->>   slowMo: 3000, // Slows down actions by 1000ms (1 second)
->>  },
->> });
->> test.describe('', () => {
+>> 
+>> test.describe('Login Tests', () => {
 >>   test.beforeEach(async ({ page }) => {
->>   utils.launch('page,https://swagger.io')
->>   utils.clickByRole(page, 'button','Allow all cookies')
->>   utils.clickElementText(page,'Sign In')
+>>     await page.goto('https://swagger.io');
+>>     const acceptCoockiesBtn = await page.getByRole('button', { name: 'Allow all cookies' });
+>>     await expect(acceptCoockiesBtn).toBeVisible();
+>>     acceptCoockiesBtn.click();
+>>     page.getByTitle('Sign In').click();
+>>     await page.locator('text=Sign In').click();
 >>   });
->>
->>   test('', async ({ page }) => {
+>> 
+>>   test('should log in with valid credentials', async ({ page }) => {
 >>     // Add test implementation here
 >>   });
->>
->>   test('', async ({ page }) => {
+>> 
+>>   test('should show an error for invalid credentials', async ({ page }) => {
 >>     // Add test implementation here
 >>   });
 >> });
 `;
 
-   // Step 2: Concatenate requirement document with prompt
-   let prompt = `${customPrompt}\n\n${content}`;
+    // Example Unit Test Case Structure (only used if Unit Test flag is selected)
+    const exampleUnitTestStructure = `
+>> Example:
+import { Page } from '@playwright/test';
+import { utils } from './utils';
 
-   // Step 3: Append example structure only for Playwright test cases
-   if (isPlaywright) {
-       prompt += `\n\n${playwrightExample}`;
-   }
+// Jest Mocks
+jest.mock('@playwright/test', () => {
+  return {
+    Page: jest.fn().mockImplementation(() => ({
+      goto: jest.fn(),
+      locator: jest.fn().mockReturnValue({
+        isVisible: jest.fn().mockResolvedValue(true),
+      }),
+    })),
+  };
+});
 
-   console.log('Generated prompt:', prompt);
+describe('Playwright utility functions', () => {
+  let page: Page;
 
-   // Step 4: Interact with Ollama
-   const response = await ollama.chat({
-       model: 'llama3.2',
-       messages: [{ role: 'user', content: prompt }],
-       stream: true,
-   });
+  beforeEach(() => {
+    page = new Page(); // Mocked instance of Playwright's Page
+  });
 
+  it('should launch the page successfully', async () => {
+    const url = 'https://example.com';
+    await utils.launch(page, url);
 
-        let generatedContent = '';
-        for await (const part of response) {
-            generatedContent += part.message.content;
-        }
+    // Assert that the page.goto method was called with the correct URL
+    expect(page.goto).toHaveBeenCalledWith(url);
+  });
 
-        // Step 4: Write the generated content to the output file
-        await writeFileContent(outputFilePath, generatedContent);
-    } catch (error) {
-        console.error('Error generating test cases with Ollama:', error);
+>> `;
+
+    // Step 2: Generate the prompt based on the selected test case type
+    let prompt = '';
+
+    // Handle different cases based on the flags passed
+    if (isPlaywright) {
+      prompt = `${customPrompt.replace('{content}', content)}\n\n${examplePlaywrightTestStructure}`;
+    } else if (isUnitTest) {
+      prompt = `${customPrompt.replace('{content}', content)}\n\n${exampleUnitTestStructure}`;
+    } else if (isEnglish) {
+      // Generate human-readable English test cases
+      prompt = `${customPrompt.replace('{content}', content)}\n\n// English Test Case Example\nTest Case 1: Verify that the user can log in with valid credentials.\nTest Case 2: Verify that the user sees an error message when logging in with invalid credentials.`;
+    } else {
+      // Default case when no flag is provided
+      prompt = `${customPrompt.replace('{content}', content)}`;
     }
+
+    console.log('Generated prompt:', prompt);
+
+    // Step 3: Interact with Ollama API to generate the response based on the prompt
+    const response = await ollama.chat({
+      model: 'llama3.2',
+      messages: [{ role: 'user', content: prompt }],
+      stream: true,
+    });
+
+    let generatedContent = '';
+    for await (const part of response) {
+      generatedContent += part.message.content;
+    }
+
+    // Step 4: Write the generated content to the output file
+    await utils.writeFileContent(outputFilePath, generatedContent);
+  } catch (error) {
+    console.error('Error generating test cases with Ollama:', error);
+  }
 }
 
 // Command-line execution logic
 if (require.main === module) {
-    const args = process.argv.slice(2);
-    if (args.length < 3) {
-        console.error('Usage: npx ts-node askOllama.ts <requirementPath> <outputFilePath> <customPrompt> [--playwright]');
-        process.exit(1);
+  const args = process.argv.slice(2);
+
+  if (args.length < 3) {
+    console.error('Usage: npx ts-node askOllama.ts <requirementPath> <outputFilePath> <customPrompt> --playwright | --unit | --english');
+    process.exit(1);
+  }
+
+  const [requirementPath, outputFilePath, customPrompt] = args;
+  const isPlaywright = args.includes('--playwright');
+  const isUnitTest = args.includes('--unit');
+  const isEnglish = args.includes('--english');
+
+  (async () => {
+    try {
+      await askOllama(requirementPath, outputFilePath, customPrompt, isPlaywright, isUnitTest, isEnglish);
+    } catch (error) {
+      console.error('Error executing askOllama:', error);
     }
-
-    const [requirementPath, outputFilePath, customPrompt, playwrightFlag] = args;
-    const isPlaywright = playwrightFlag === '--playwright';
-
-    (async () => {
-        try {
-            await askOllama(requirementPath, outputFilePath, customPrompt, isPlaywright);
-        } catch (error) {
-            console.error('Error executing askOllama:', error);
-        }
-    })();
+  })();
 }

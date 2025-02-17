@@ -47,4 +47,26 @@ export const utils = {
     const element = await page.getByRole(role, { name });
     await element.click();
   },
+
+  // Read file content
+  readFileContent: async (filePath: string): Promise<string> => {
+    try {
+      const content = await fs.readFile(filePath, 'utf8');
+      return content;
+    } catch (error) {
+      console.error(`Error reading file: ${filePath}`, error);
+      throw error;
+    }
+  },
+
+  // Write content to a file
+  writeFileContent: async (filePath: string, content: string): Promise<void> => {
+    try {
+      await fs.writeFile(filePath, content, 'utf8');
+      console.log(`File written successfully: ${filePath}`);
+    } catch (error) {
+      console.error(`Error writing to file: ${filePath}`, error);
+      throw error;
+    }
+  }
 };

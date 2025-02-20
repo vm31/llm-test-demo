@@ -41,38 +41,24 @@ async function askOllama(
 
     // Example Unit Test Case Structure (only used if Unit Test flag is selected)
     const exampleUnitTestStructure = `
->> Example:
-import { Page } from '@playwright/test';
-import { utils } from './utils';
-
-// Jest Mocks
-jest.mock('@playwright/test', () => {
-  return {
-    Page: jest.fn().mockImplementation(() => ({
-      goto: jest.fn(),
-      locator: jest.fn().mockReturnValue({
-        isVisible: jest.fn().mockResolvedValue(true),
-      }),
-    })),
-  };
-});
-
-describe('Playwright utility functions', () => {
-  let page: Page;
-
-  beforeEach(() => {
-    page = new Page(); // Mocked instance of Playwright's Page
-  });
-
-  it('should launch the page successfully', async () => {
-    const url = 'https://example.com';
-    await utils.launch(page, url);
-
-    // Assert that the page.goto method was called with the correct URL
-    expect(page.goto).toHaveBeenCalledWith(url);
-  });
-
->> `;
+>>import axios from 'axios';
+>>
+>>jest.mock('axios'); // Mock Axios for unit testing
+>>
+>>describe('Swagger.io Login Functionality', () => {
+>>  const mockAxios = axios as jest.Mocked<typeof axios>;
+>>
+>>  beforeEach(() => {
+>>    jest.clearAllMocks(); // Reset mocks before each test
+>>  });
+>>
+>>  it('should successfully login with valid credentials', async () => {
+>>  });
+>>  
+>>  it('should fail login with invalid credentials', async () => {
+>>
+>>  });
+ `;
 
     // Step 2: Generate the prompt based on the selected test case type
     let prompt = '';

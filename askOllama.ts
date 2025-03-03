@@ -18,13 +18,13 @@ async function askOllama(
     const examplePlaywrightTestStructure = `
 >> Example:
 >> import { test, expect } from '@playwright/test';
->> 
+>> import {utils} from '../support/utils';
+>>
 >> test.describe('Login Tests', () => {
 >>   test.beforeEach(async ({ page }) => {
 >>     await page.goto('https://swagger.io');
->>     const acceptCoockiesBtn = await page.getByRole('button', { name: 'Allow all cookies' });
->>     await expect(acceptCoockiesBtn).toBeVisible();
->>     acceptCoockiesBtn.click();
+>>     utils.clickByRole(page, 'button','Allow all cookies')
+>>     utils.clickElementText(page,'Sign In')     
 >>     page.getByTitle('Sign In').click();
 >>     await page.locator('text=Sign In').click();
 >>   });
@@ -33,9 +33,6 @@ async function askOllama(
 >>     // Add test implementation here
 >>   });
 >> 
->>   test('should show an error for invalid credentials', async ({ page }) => {
->>     // Add test implementation here
->>   });
 >> });
 `;
 

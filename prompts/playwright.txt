@@ -1,0 +1,9 @@
+You are a Software Test Engineer. Generate functional test cases in Playwright using TypeScript for a Swagger application (https://swagger.io/).
+
+Requirements:
+- The test cases should be based on the English test cases provided below.
+- The output should be a Playwright test file with:
+  - A single test.describe block.
+  - A test.beforeEach hook for preconditions.
+  - Multiple test cases covering all testcases in the above english testcases list
+- Do not include commentary or extra text—only the Playwright test cases.
